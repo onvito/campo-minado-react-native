@@ -4,13 +4,32 @@ import { View, Text, StyleSheet } from "react-native";
 import params from "../Params";
 
 export default (props) => {
-  const { mined, opened, nearMines } = props
+  //Definindo quadrados que terão as minas, abertos e minas proximas
+  const { mined, opened, nearMines } = props;
 
+  //Definindo estilo padrao dos blocos
   const styleField = [styles.field];
+
+  //Após o bloco ser aberto, ele sai do estilo padrao para ganhar o estilo de bloco aberto
+  if (opened) styleField.push(styles.opened);
   if (styleField.length === 1) styleField.push(styles.regular);
+
+  //Definindo a cor de acordo com a proximidade de minas daquele bloco
+  let color = null;
+  if (nearMines > 0) {
+    if (nearMines == 1) color = "#2A28D7";
+    if (nearMines == 2) color = "#2B520F";
+    if (nearMines > 2 && nearMines < 6) color = "#F9060A";
+    if (nearMines >= 6) color = "#F221A9";
+  }
+
   return (
     <View style={styleField}>
-      <Text> Fala zé </Text>
+      {!mined && opened && nearMines > 0 ? (
+        <Text style={[styles.label, { color: color }]}>{nearMines}</Text>
+      ) : (
+        false
+      )}
     </View>
   );
 };
@@ -28,4 +47,13 @@ const styles = StyleSheet.create({
     borderRightColor: "#333",
     borderBottomColor: "#333",
   },
+  opened: {
+    backgroundColor: "#999",
+    borderColor: "#777",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  label: {
+    fontWeight: 'bold',
+  }
 });
