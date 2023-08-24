@@ -2,16 +2,18 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
 import params from "../Params";
+import Mine from "./Mine";
 
 export default (props) => {
   //Definindo quadrados que terão as minas, abertos e minas proximas
-  const { mined, opened, nearMines } = props;
+  const { mined, opened, nearMines, exploded } = props;
 
   //Definindo estilo padrao dos blocos
   const styleField = [styles.field];
 
   //Após o bloco ser aberto, ele sai do estilo padrao para ganhar o estilo de bloco aberto
   if (opened) styleField.push(styles.opened);
+  if (exploded) styleField.push(styles.exploded);
   if (styleField.length === 1) styleField.push(styles.regular);
 
   //Definindo a cor de acordo com a proximidade de minas daquele bloco
@@ -30,6 +32,7 @@ export default (props) => {
       ) : (
         false
       )}
+      {mined && opened ? <Mine /> : false}
     </View>
   );
 };
@@ -54,6 +57,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   label: {
-    fontWeight: 'bold',
-  }
+    fontWeight: "bold",
+    fontSize: params.fontSize,
+  },
+  exploded: {
+    backgroundColor: "red",
+    borderColor: "red",
+  },
 });
