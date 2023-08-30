@@ -9,6 +9,11 @@ import { createMinedBoard } from "./src/functions";
 
 export default class App extends Component {
 
+  constructor(props) {
+    super(props)
+    this.state = this.createState()
+  }
+ 
   minesAmount = () => {
     const cols = params.getColumnsAmount()
     const rows = params.getRowsAmount()
@@ -28,10 +33,8 @@ export default class App extends Component {
       <View style={styles.container}>
         <Text>Projeto campo minado!!!</Text>
         <Text>
-          {" "}
           Tamanho da grade:
-          {params.getRowsAmount()} X {params.getColumnsAmount()}{" "}
-        </Text>
+          {params.getRowsAmount()} X {params.getColumnsAmount()}</Text>
 
         <View style={styles.board}>
           <MineField board={this.state.board} />
