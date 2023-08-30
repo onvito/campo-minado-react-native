@@ -40,7 +40,7 @@ const createMinedBoard = (rows, columns, minesAmount) => {
 }
 
 //Clone tabuleiro
-const cloneBoard = () => {
+const cloneBoard = board => {
     return board.map(rows => {
         return rows.map(field => {
             return { ...field} 
@@ -52,13 +52,13 @@ const cloneBoard = () => {
 const getNeighbors = (board, row, column) => {
     const neighbors = []
     const rows = [row - 1, row, row + 1]
-    const columns = [column - 1, column, column + 1]
+    const columns = [column-1, column, column + 1]
     rows.forEach(r => {
         columns.forEach(c => {
-            const different = r !== row || c !== column
+            const diferent = r !== row || c !== column
             const validRow = r >=0 && r < board.length
             const validColumn = c >= 0 && c < board[0].length
-            if (different && validRow && validColumn) {
+            if (diferent && validRow && validColumn) {
                 neighbors.push(board[r][c])
             }
         })
@@ -80,8 +80,7 @@ const openField = (board, row, column) => {
         if (field.mined) {
             field.exploded = true
         } else if (safeNeighborhood(board, row, column)) {
-            getNeighbors(board, row, column)
-                .forEach(n => openField(board, n.row, n.column))
+            getNeighbors(board, row, column).forEach(n => openField(board, n.row, n.column))
         } else {
             const neighbors = getNeighbors(board, row, column)
             field.nearMines = neighbors.filter(n => n.mined).length
@@ -93,7 +92,7 @@ const fields = board => [].concat(...board)
 
 //Pegar campos que explodiram
 const hadExplosion = board => fields(board)
-    .filter(filter => field.exploded).length > 0
+    .filter(field => field.exploded).length > 0
 
 //Saber se existem campos pendentes no jogo    
 const pendding = field => (field.mined && !field.flagged)
