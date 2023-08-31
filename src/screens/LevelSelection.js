@@ -23,7 +23,7 @@ export default props => {
                     <TouchableOpacity
                         style={[styles.button, styles.bgHard]}
                         onPress={() => props.onLevelSelected(0.3)}>
-                        <Text style={styles.buttonLabel}>Fácil</Text>
+                        <Text style={styles.buttonLabel}>Difícil</Text>
                     </TouchableOpacity>
                 </View>
             </View>
